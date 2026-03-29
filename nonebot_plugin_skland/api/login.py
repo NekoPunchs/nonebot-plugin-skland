@@ -33,10 +33,12 @@ class SklandLoginAPI:
                 json={"appCode": code, "token": token, "type": grant_type},
                 headers={**cls._headers},
             )
-            if status := response.json().get("status"):
+            j = response.json()
+
+            if status := j.get("status"):
                 if status != 0:
-                    raise RequestException(f"使用token获得认证代码失败：{response.json().get('msg')}")
-            return response.json()["data"]["code"] if grant_type == 0 else response.json()["data"]["token"]
+                    raise RequestException(f"使用token获得认证代码失败：{j.get('msg')}")
+            return j["data"]["code"] if grant_type == 0 else j["data"]["token"]
 
     @classmethod
     async def get_cred(cls, grant_code: str) -> CRED:

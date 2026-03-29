@@ -1,6 +1,7 @@
 import hmac
 import json
 import hashlib
+import contextlib
 from typing import Literal
 from datetime import datetime
 from urllib.parse import urlparse
@@ -9,7 +10,7 @@ import httpx
 from nonebot import logger
 from nonebot.compat import type_validate_python
 
-from nonebot_plugin_skland.model import Character
+from ..model import Character
 
 from ..exception import LoginException, RequestException, UnauthorizedException
 from ..schemas import (
